@@ -12,6 +12,11 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int main_menu_mockup=0x7f020001;
+    }
+    public static final class id {
+        public static final int button_to_quiz=0x7f050001;
+        public static final int button_to_zoo=0x7f050000;
     }
     public static final class layout {
         public static final int main=0x7f030000;
