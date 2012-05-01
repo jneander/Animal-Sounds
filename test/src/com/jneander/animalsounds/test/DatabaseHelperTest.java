@@ -47,10 +47,39 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
   }
 
   public void testDatabaseWasCreated() {
+    if ( databaseExists() )
+      removeExistingDatabase();
     assertFalse( databaseExists() );
-    database = dbHelper.getReadableDatabase();
-    dbHelper.close();
+
+    loadDatabase();
     assertTrue( databaseExists() );
+  }
+
+  public void testDatabaseWasRemoved() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    removeExistingDatabase();
+    assertFalse( databaseExists() );
+  }
+
+  private void loadDatabase() {
+    if ( !databaseExists() ) {
+      openDatabase();
+      closeDatabase();
+    }
+  }
+
+  private void openDatabase() {
+    database = dbHelper.getReadableDatabase();
+  }
+
+  private void closeDatabase() {
+    dbHelper.close();
+  }
+
+  private void removeExistingDatabase() {
+    activity.deleteDatabase( DB_NAME );
   }
 
   private boolean databaseExists() {
