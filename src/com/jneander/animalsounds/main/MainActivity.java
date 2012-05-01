@@ -11,16 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        
-    }
-    
-    public void goToZoo(View v) {
-    	Intent zooIntent = new Intent(this, ZooActivity.class);
-    	this.startActivity( zooIntent );
-    }
+  @Override
+  public void onCreate( Bundle savedInstanceState ) {
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.main );
+  }
+
+  public void goToZoo( View v ) {
+    Intent zooIntent = new Intent( this, ZooActivity.class );
+    this.startActivity( zooIntent );
+  }
 }
