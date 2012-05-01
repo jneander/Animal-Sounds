@@ -45,4 +45,22 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     if ( input != null )
       input.close();
   }
+
+  public void testDatabaseWasCreated() {
+    assertFalse( databaseExists() );
+    database = dbHelper.getReadableDatabase();
+    dbHelper.close();
+    assertTrue( databaseExists() );
+  }
+
+  private boolean databaseExists() {
+    SQLiteDatabase checkDB = null;
+
+    try {
+      checkDB = SQLiteDatabase.openDatabase( DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY );
+      checkDB.close();
+    } catch ( Exception e ) {}
+
+    return checkDB != null;
+  }
 }
