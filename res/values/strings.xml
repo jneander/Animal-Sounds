@@ -4,4 +4,10 @@
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Animal Sounds</string>
 
+    <string-array name="animalFacts">
+        <item>giraffe</item>
+        <item>horse</item>
+        <item>squirrel</item>
+    </string-array>
+
 </resources>

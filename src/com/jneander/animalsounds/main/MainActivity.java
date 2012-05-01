@@ -1,4 +1,7 @@
-package com.jneander.animalsounds;
+package com.jneander.animalsounds.main;
+
+import com.jneander.animalsounds.R;
+import com.jneander.animalsounds.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
