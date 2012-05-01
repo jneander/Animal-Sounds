@@ -1,5 +1,9 @@
 package com.jneander.animalsounds.test;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -25,5 +29,20 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
     dbHelper = new DatabaseHelper( activity );
     DB_PATH = "/data/data/" + activity.getPackageName() + "/databases/";
+  }
+
+  public void testDatabaseFileExists() throws IOException {
+    AssetManager assets = activity.getAssets();
+    assertNotNull( assets );
+
+    String[] assetList = assets.list( "" );
+    assertNotNull( assetList );
+    assertTrue( assetList.length > 0 );
+
+    InputStream input = assets.open( DB_NAME );
+    assertNotNull( input );
+
+    if ( input != null )
+      input.close();
   }
 }
