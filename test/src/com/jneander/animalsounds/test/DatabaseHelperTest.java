@@ -64,6 +64,36 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     assertTrue( databaseExists() );
   }
 
+  public void testDatabaseWasUpdated() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    openDatabase();
+    int oldversion = database.getVersion();
+    database.setVersion( oldversion - 1 );
+    assertTrue( database.getVersion() < oldversion );
+
+    database.execSQL( "DELETE FROM animals" );
+    Cursor cursor = getAnimalsCursor();
+    assertTrue( cursor.getCount() == 0 );
+
+    oldversion = database.getVersion();
+    closeDatabase();
+
+    dbHelper = new DatabaseHelper( activity );
+
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    openDatabase();
+    assertTrue( database.getVersion() > oldversion );
+    closeDatabase();
+
+    testDatabaseHasTables();
+    testDatabaseHasColumns();
+    testDatabaseHasEntries();
+  }
+
   public void testDatabaseWasRemoved() {
     loadDatabase();
     assertTrue( databaseExists() );
