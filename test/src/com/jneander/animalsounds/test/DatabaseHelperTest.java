@@ -2,8 +2,12 @@ package com.jneander.animalsounds.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -17,6 +21,8 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
   private SQLiteDatabase database;
   private String DB_PATH;
   private String DB_NAME = "animalData.db";
+  
+  private final String[] dbTableNames = new String[] { "android_metadata", "animals" };
 
   public DatabaseHelperTest() {
     super( MainActivity.class.getPackage().getName(), MainActivity.class );
@@ -63,6 +69,30 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     assertFalse( databaseExists() );
   }
 
+  public void testDatabaseHasTables() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    openDatabase();
+
+    Cursor cursor = getTableCursor();
+    assertNotNull( cursor );
+
+    List< String > tableNames = new ArrayList< String >();
+
+    if ( cursor.moveToFirst() )
+      while ( !cursor.isAfterLast() ) {
+        tableNames.add( cursor.getString( 0 ) );
+        cursor.moveToNext();
+      }
+    cursor.close();
+
+    assertTrue( tableNames.size() == dbTableNames.length );
+    assertTrue( tableNames.containsAll( Arrays.asList( dbTableNames ) ) );
+
+    closeDatabase();
+  }
+  
   private void loadDatabase() {
     if ( !databaseExists() ) {
       openDatabase();
@@ -91,5 +121,9 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     } catch ( Exception e ) {}
 
     return checkDB != null;
+  }
+
+  private Cursor getTableCursor() {
+    return database.rawQuery( "SELECT name FROM sqlite_master WHERE type='table'", null );
   }
 }
