@@ -23,6 +23,7 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
   private String DB_NAME = "animalData.db";
   
   private final String[] dbTableNames = new String[] { "android_metadata", "animals" };
+  private final String[] dbAnimalsColumns = new String[] { "_id", "name", "facts", "imagefile", "soundfile" };
 
   public DatabaseHelperTest() {
     super( MainActivity.class.getPackage().getName(), MainActivity.class );
@@ -93,6 +94,28 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     closeDatabase();
   }
   
+  public void testDatabaseHasColumns() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    openDatabase();
+
+    Cursor cursor = getAnimalsCursor();
+    assertNotNull( cursor );
+
+    List< String > columnNames = new ArrayList< String >();
+    int columnCount = cursor.getColumnCount();
+
+    if ( cursor.moveToFirst() )
+      for ( int columnIndex = 0; columnIndex < columnCount; columnIndex++ )
+        columnNames.add( cursor.getColumnName( columnIndex ) );
+
+    assertTrue( columnNames.size() == dbAnimalsColumns.length );
+    assertTrue( columnNames.containsAll( Arrays.asList( dbAnimalsColumns ) ) );
+
+    closeDatabase();
+  }
+  
   private void loadDatabase() {
     if ( !databaseExists() ) {
       openDatabase();
@@ -125,5 +148,9 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
   private Cursor getTableCursor() {
     return database.rawQuery( "SELECT name FROM sqlite_master WHERE type='table'", null );
+  }
+
+  private Cursor getAnimalsCursor() {
+    return database.rawQuery( "SELECT * FROM animals", null );
   }
 }
