@@ -14,16 +14,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   private static final int DB_VERSION = 1;
   private static final String DB_NAME = "animalData.db";
   private String DB_PATH;
-  
+
   private Context context;
 
   public DatabaseHelper( Context context ) {
     super( context, DB_NAME, null, DB_VERSION );
-    
+
     this.context = context;
     DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
-    
-    copyDatabaseFromAssets();
+
+    establishDatabase();
   }
 
   @Override
@@ -31,7 +31,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) {}
-  
+
+  private void establishDatabase() {
+    SQLiteDatabase checkDB;
+    int existingDatabaseVersion = -1;
+
+    try {
+      checkDB = SQLiteDatabase.openDatabase( DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY );
+      existingDatabaseVersion = checkDB.getVersion();
+      checkDB.close();
+    } catch ( Exception e ) {}
+
+    if ( existingDatabaseVersion < DB_VERSION )
+      copyDatabaseFromAssets();
+  }
+
   private void copyDatabaseFromAssets() {
     try {
       InputStream input = context.getAssets().open( DB_NAME );

@@ -10,6 +10,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.jneander.animalsounds.main.MainActivity;
 import com.jneander.animalsounds.util.DatabaseHelper;
@@ -64,6 +65,14 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     assertTrue( databaseExists() );
   }
 
+  public void testDatabaseWasRemoved() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    removeExistingDatabase();
+    assertFalse( databaseExists() );
+  }
+
   public void testDatabaseWasUpdated() {
     loadDatabase();
     assertTrue( databaseExists() );
@@ -76,6 +85,7 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     database.execSQL( "DELETE FROM animals" );
     Cursor cursor = getAnimalsCursor();
     assertTrue( cursor.getCount() == 0 );
+    cursor.close();
 
     oldversion = database.getVersion();
     closeDatabase();
@@ -94,12 +104,36 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
     testDatabaseHasEntries();
   }
 
-  public void testDatabaseWasRemoved() {
+  public void testDatabaseWasNotUpdated() {
+    removeExistingDatabase();
+    assertFalse( databaseExists() );
+
     loadDatabase();
     assertTrue( databaseExists() );
 
-    removeExistingDatabase();
-    assertFalse( databaseExists() );
+    openDatabase();
+    logDatabaseTables();
+
+    database.execSQL( "DELETE FROM animals" );
+    Cursor cursor = getAnimalsCursor();
+    assertTrue( cursor.getCount() == 0 );
+    cursor.close();
+
+    closeDatabase();
+
+    dbHelper = new DatabaseHelper( activity );
+    
+    loadDatabase();
+    assertTrue(databaseExists());
+    
+    openDatabase();
+    logDatabaseTables();
+    
+    cursor = getAnimalsCursor();
+    assertTrue( cursor.getCount() == 0 );
+    cursor.close();
+    
+    closeDatabase();
   }
 
   public void testDatabaseHasTables() {
@@ -174,6 +208,7 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
   private void loadDatabase() {
     if ( !databaseExists() ) {
+      dbHelper = new DatabaseHelper( activity );
       openDatabase();
       closeDatabase();
     }
@@ -208,5 +243,49 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
   private Cursor getAnimalsCursor() {
     return database.rawQuery( "SELECT * FROM animals", null );
+  }
+
+  private void logDatabaseTables() {
+    Cursor cursor = getTableCursor();
+
+    if ( cursor.moveToFirst() ) {
+      Log.w( this.activity.getPackageName(), "number of columns: " + cursor.getCount() );
+      while ( !cursor.isAfterLast() ) {
+        Log.w( this.activity.getPackageName(), "database table: " + cursor.getString( cursor.getColumnIndex( "name" ) ) );
+        cursor.moveToNext();
+      }
+    }
+    cursor.close();
+  }
+
+  private void logDatabaseColumns() {
+    Cursor cursor = getAnimalsCursor();
+
+    if ( cursor.moveToFirst() ) {
+      StringBuilder output = new StringBuilder();
+      int columnCount = cursor.getColumnCount();
+
+      for ( int i = 0; i < columnCount; i++ )
+        output.append( cursor.getColumnName( i ) + ((columnCount == i + 1) ? "" : ", ") );
+      Log.w( this.activity.getPackageName(), "table columns: {" + output.toString() + "}" );
+    }
+    cursor.close();
+  }
+
+  private void logDatabaseEntries() {
+    Cursor cursor = getAnimalsCursor();
+
+    if ( cursor.moveToFirst() ) {
+      while ( !cursor.isAfterLast() ) {
+        StringBuilder output = new StringBuilder();
+        int columnCount = cursor.getColumnCount();
+
+        for ( int columnIndex = 0; columnIndex < columnCount; columnIndex++ )
+          output.append( cursor.getString( columnIndex ) + ((columnCount == columnIndex + 1) ? "" : ", ") );
+        Log.w( this.activity.getPackageName(), "table entries: {" + output.toString() + "}" );
+        cursor.moveToNext();
+      }
+    }
+    cursor.close();
   }
 }
