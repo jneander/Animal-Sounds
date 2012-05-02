@@ -1,5 +1,7 @@
 package com.jneander.animalsounds.test;
 
+import java.util.Arrays;
+
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jneander.animalsounds.main.MainActivity;
@@ -17,11 +19,13 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
   protected void setUp() throws Exception {
     super.setUp();
     activity = getActivity();
-    
+
     dbAccessor = new DatabaseAccessor( activity );
   }
-  
+
   public void testAccessorAnimalNames() {
-    
+    String[] accessorAnimalsNames = dbAccessor.getAnimalsNames();
+    assertTrue( Arrays.asList( dbAnimalsNames ).containsAll( Arrays.asList( accessorAnimalsNames ) ) );
+    assertTrue( Arrays.asList( accessorAnimalsNames ).containsAll( Arrays.asList( dbAnimalsNames ) ) );
   }
 }
