@@ -21,9 +21,11 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
   private SQLiteDatabase database;
   private String DB_PATH;
   private String DB_NAME = "animalData.db";
-  
+
   private final String[] dbTableNames = new String[] { "android_metadata", "animals" };
   private final String[] dbAnimalsColumns = new String[] { "_id", "name", "facts", "imagefile", "soundfile" };
+  private final String[] dbAnimalsNames = new String[] { "Giraffe", "Squirrel", "Horse" };
+  private final int dbAnimalsNameColumnIndex = 1;
 
   public DatabaseHelperTest() {
     super( MainActivity.class.getPackage().getName(), MainActivity.class );
@@ -93,7 +95,7 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
     closeDatabase();
   }
-  
+
   public void testDatabaseHasColumns() {
     loadDatabase();
     assertTrue( databaseExists() );
@@ -115,7 +117,31 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
     closeDatabase();
   }
-  
+
+  public void testDatabaseHasEntries() {
+    loadDatabase();
+    assertTrue( databaseExists() );
+
+    openDatabase();
+
+    Cursor cursor = getAnimalsCursor();
+    assertNotNull( cursor );
+
+    List< String > tableEntries = new ArrayList< String >();
+
+    if ( cursor.moveToFirst() )
+      while ( !cursor.isAfterLast() ) {
+        tableEntries.add( cursor.getString( dbAnimalsNameColumnIndex ) );
+        cursor.moveToNext();
+      }
+    cursor.close();
+
+    assertTrue( tableEntries.size() == dbAnimalsNames.length );
+    assertTrue( tableEntries.containsAll( Arrays.asList( dbAnimalsNames ) ) );
+
+    closeDatabase();
+  }
+
   private void loadDatabase() {
     if ( !databaseExists() ) {
       openDatabase();
