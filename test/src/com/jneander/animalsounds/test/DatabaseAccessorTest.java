@@ -3,6 +3,7 @@ package com.jneander.animalsounds.test;
 import java.util.Arrays;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.jneander.animalsounds.main.MainActivity;
 import com.jneander.animalsounds.obj.Animal;
@@ -35,6 +36,7 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
     assertNotNull( accessorAnimals );
 
     for ( Animal currentAnimal : accessorAnimals ) {
+      logAnimal( currentAnimal );
       assertNotNull( currentAnimal.getId() );
       assertNotNull( currentAnimal.getName() );
       assertTrue( animalNameMatches( currentAnimal.getName() ) );
@@ -47,5 +49,12 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
 
   public boolean animalNameMatches( String accessorName ) {
     return Arrays.asList( dbAnimalsNames ).contains( accessorName );
+  }
+
+  public void logAnimal( Animal animal ) {
+    Log.w( activity.getPackageName(),
+        String.format( "Animal -> id: %d, name: %s, files: %s|%s",
+            animal.getId(), animal.getName(), animal.getImagefile(), animal.getSoundfile()
+            ) );
   }
 }
