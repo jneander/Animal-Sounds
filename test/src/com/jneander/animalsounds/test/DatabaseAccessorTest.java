@@ -5,6 +5,7 @@ import java.util.Arrays;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jneander.animalsounds.main.MainActivity;
+import com.jneander.animalsounds.obj.Animal;
 import com.jneander.animalsounds.util.DatabaseAccessor;
 
 public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< MainActivity > {
@@ -27,5 +28,10 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
     String[] accessorAnimalsNames = dbAccessor.getAnimalsNames();
     assertTrue( Arrays.asList( dbAnimalsNames ).containsAll( Arrays.asList( accessorAnimalsNames ) ) );
     assertTrue( Arrays.asList( accessorAnimalsNames ).containsAll( Arrays.asList( dbAnimalsNames ) ) );
+  }
+  
+  public void testAccessorGetAnimals() {
+    Animal[] accessorAnimals = dbAccessor.getAnimalsArray();
+    assertNotNull(accessorAnimals);
   }
 }
