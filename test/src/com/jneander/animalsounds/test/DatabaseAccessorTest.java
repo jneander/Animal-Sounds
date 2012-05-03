@@ -29,9 +29,23 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
     assertTrue( Arrays.asList( dbAnimalsNames ).containsAll( Arrays.asList( accessorAnimalsNames ) ) );
     assertTrue( Arrays.asList( accessorAnimalsNames ).containsAll( Arrays.asList( dbAnimalsNames ) ) );
   }
-  
+
   public void testAccessorGetAnimals() {
     Animal[] accessorAnimals = dbAccessor.getAnimalsArray();
-    assertNotNull(accessorAnimals);
+    assertNotNull( accessorAnimals );
+
+    for ( Animal currentAnimal : accessorAnimals ) {
+      assertNotNull( currentAnimal.getId() );
+      assertNotNull( currentAnimal.getName() );
+      assertTrue( animalNameMatches( currentAnimal.getName() ) );
+
+      assertNotNull( currentAnimal.getFacts() );
+      assertNotNull( currentAnimal.getImagefile() );
+      assertNotNull( currentAnimal.getSoundfile() );
+    }
+  }
+
+  public boolean animalNameMatches( String accessorName ) {
+    return Arrays.asList( dbAnimalsNames ).contains( accessorName );
   }
 }
