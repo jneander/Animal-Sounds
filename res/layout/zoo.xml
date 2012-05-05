@@ -19,6 +19,7 @@
             android:id="@+id/zoo_animal_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -54,13 +55,14 @@
             android:layout_alignParentBottom="true" >
 
             <Button
-                android:id="@+id/last_button"
+                android:id="@+id/zoo_last_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Last" />
 
             <Button
+                android:id="@+id/zoo_next_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
