@@ -15,7 +15,7 @@ import com.jneander.animalsounds.R;
 import com.jneander.animalsounds.obj.Animal;
 import com.jneander.animalsounds.util.DatabaseAccessor;
 
-public class ZooActivity extends Activity {
+public class ZooActivity extends Activity implements OnClickListener {
   private Animal[] animals;
   private int currentAnimal = 0;
 
@@ -40,25 +40,23 @@ public class ZooActivity extends Activity {
     animalView = (ImageView) findViewById( R.id.zoo_animal_image );
 
     prevButton = (Button) this.findViewById( R.id.zoo_last_button );
-    prevButton.setOnClickListener( new OnClickListener() {
-      @Override
-      public void onClick( View v ) {
-        loadLast();
-      }
-    } );
     nextButton = (Button) this.findViewById( R.id.zoo_next_button );
-    nextButton.setOnClickListener( new OnClickListener() {
-      @Override
-      public void onClick( View v ) {
-        loadNext();
-      }
-    } );
+    prevButton.setOnClickListener( this );
+    nextButton.setOnClickListener( this );
 
     loadDatabaseIntoArray();
 
     updateAnimalFacts();
     updateAnimalImage();
     updateAnimalSound();
+  }
+
+  @Override
+  public void onClick( View v ) {
+    if ( v.getId() == R.id.zoo_last_button )
+      loadLast();
+    else if ( v.getId() == R.id.zoo_next_button )
+      loadNext();
   }
 
   private void updateAnimalFacts() {
