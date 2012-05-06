@@ -39,6 +39,7 @@
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:clickable="true"
+        android:onClick="goToQuiz"
         android:src="@drawable/button_to_quiz" />
 
 </LinearLayout>
