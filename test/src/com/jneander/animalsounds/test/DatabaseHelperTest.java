@@ -25,7 +25,6 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
 
   private final String[] dbTableNames = new String[] { "android_metadata", "animals" };
   private final String[] dbAnimalsColumns = new String[] { "_id", "name", "facts", "imagefile", "soundfile" };
-  private final String[] dbAnimalsNames = new String[] { "Giraffe", "Squirrel", "Horse" };
   private final int dbAnimalsNameColumnIndex = 1;
 
   public DatabaseHelperTest() {
@@ -200,8 +199,7 @@ public class DatabaseHelperTest extends ActivityInstrumentationTestCase2< MainAc
       }
     cursor.close();
 
-    assertTrue( tableEntries.size() == dbAnimalsNames.length );
-    assertTrue( tableEntries.containsAll( Arrays.asList( dbAnimalsNames ) ) );
+    assertTrue( tableEntries.size() > 0 );
 
     closeDatabase();
   }

@@ -1,7 +1,5 @@
 package com.jneander.animalsounds.test;
 
-import java.util.Arrays;
-
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
@@ -12,7 +10,6 @@ import com.jneander.animalsounds.util.DatabaseAccessor;
 public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< MainActivity > {
   private MainActivity activity;
   private DatabaseAccessor dbAccessor;
-  private final String[] dbAnimalsNames = new String[] { "Giraffe", "Squirrel", "Horse" };
 
   public DatabaseAccessorTest() {
     super( MainActivity.class.getPackage().getName(), MainActivity.class );
@@ -27,8 +24,7 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
 
   public void testAccessorAnimalNames() {
     String[] accessorAnimalsNames = dbAccessor.getAnimalsNames();
-    assertTrue( Arrays.asList( dbAnimalsNames ).containsAll( Arrays.asList( accessorAnimalsNames ) ) );
-    assertTrue( Arrays.asList( accessorAnimalsNames ).containsAll( Arrays.asList( dbAnimalsNames ) ) );
+    assertTrue( accessorAnimalsNames.length > 0 );
   }
 
   public void testAccessorGetAnimals() {
@@ -39,16 +35,11 @@ public class DatabaseAccessorTest extends ActivityInstrumentationTestCase2< Main
       logAnimal( currentAnimal );
       assertNotNull( currentAnimal.getId() );
       assertNotNull( currentAnimal.getName() );
-      assertTrue( animalNameMatches( currentAnimal.getName() ) );
 
       assertNotNull( currentAnimal.getFacts() );
       assertNotNull( currentAnimal.getImagefile() );
       assertNotNull( currentAnimal.getSoundfile() );
     }
-  }
-
-  public boolean animalNameMatches( String accessorName ) {
-    return Arrays.asList( dbAnimalsNames ).contains( accessorName );
   }
 
   public void logAnimal( Animal animal ) {
