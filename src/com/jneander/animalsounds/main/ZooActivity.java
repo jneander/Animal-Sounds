@@ -3,6 +3,7 @@ package com.jneander.animalsounds.main;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -19,14 +20,15 @@ import com.jneander.animalsounds.util.DatabaseAccessor;
 public class ZooActivity extends Activity implements OnClickListener {
   private Animal[] animals;
   private int currentAnimal = 0;
-  
-  private MediaPlayer player;
+
+  private MediaPlayer player = new MediaPlayer();
+  private AssetFileDescriptor assetFile;
 
   private TextView animalName;
   private TextView animalFacts;
   private ImageView animalView;
 
-  private Button prevButton;
+  private Button lastButton;
   private Button nextButton;
 
   private DatabaseAccessor dbAccessor;
@@ -37,14 +39,15 @@ public class ZooActivity extends Activity implements OnClickListener {
     setContentView( R.layout.zoo );
 
     dbAccessor = new DatabaseAccessor( this );
-    
+
     animalName = (TextView) this.findViewById( R.id.zoo_animal_name );
     animalFacts = (TextView) this.findViewById( R.id.zoo_animal_facts );
     animalView = (ImageView) findViewById( R.id.zoo_animal_image );
+    animalView.setOnClickListener( this );
 
-    prevButton = (Button) this.findViewById( R.id.zoo_last_button );
+    lastButton = (Button) this.findViewById( R.id.zoo_last_button );
     nextButton = (Button) this.findViewById( R.id.zoo_next_button );
-    prevButton.setOnClickListener( this );
+    lastButton.setOnClickListener( this );
     nextButton.setOnClickListener( this );
 
     loadDatabaseIntoArray();
@@ -56,10 +59,12 @@ public class ZooActivity extends Activity implements OnClickListener {
 
   @Override
   public void onClick( View v ) {
-    if ( v.getId() == R.id.zoo_last_button )
+    if ( v.getId() == lastButton.getId() )
       loadLast();
-    else if ( v.getId() == R.id.zoo_next_button )
+    else if ( v.getId() == nextButton.getId() )
       loadNext();
+    else if ( v.getId() == animalView.getId() )
+      player.start();
   }
 
   private void updateAnimalFacts() {
@@ -77,7 +82,17 @@ public class ZooActivity extends Activity implements OnClickListener {
     }
   }
 
-  private void updateAnimalSound() {}
+  private void updateAnimalSound() {
+    try {
+      player.reset();
+      assetFile = getAssets().openFd( "sounds/" + animals[currentAnimal].getSoundfile() );
+      player.setDataSource( assetFile.getFileDescriptor(), assetFile.getStartOffset(), assetFile.getLength() );
+      assetFile.close();
+      player.prepare();
+    } catch ( IOException e ) {
+      e.printStackTrace();
+    }
+  }
 
   public void loadNext() {
     currentAnimal = (currentAnimal + 1) % animals.length;
