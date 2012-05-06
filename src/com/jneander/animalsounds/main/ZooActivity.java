@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,8 @@ import com.jneander.animalsounds.util.DatabaseAccessor;
 public class ZooActivity extends Activity implements OnClickListener {
   private Animal[] animals;
   private int currentAnimal = 0;
+  
+  private MediaPlayer player;
 
   private TextView animalName;
   private TextView animalFacts;
@@ -34,7 +37,7 @@ public class ZooActivity extends Activity implements OnClickListener {
     setContentView( R.layout.zoo );
 
     dbAccessor = new DatabaseAccessor( this );
-
+    
     animalName = (TextView) this.findViewById( R.id.zoo_animal_name );
     animalFacts = (TextView) this.findViewById( R.id.zoo_animal_facts );
     animalView = (ImageView) findViewById( R.id.zoo_animal_image );
@@ -68,7 +71,7 @@ public class ZooActivity extends Activity implements OnClickListener {
     try {
       animalView.setImageBitmap( BitmapFactory.decodeStream(
           this.getAssets().open(
-              "animals/" + animals[currentAnimal].getImagefile() ) ) );
+              "images/" + animals[currentAnimal].getImagefile() ) ) );
     } catch ( IOException e ) {
       e.printStackTrace();
     }
