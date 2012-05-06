@@ -27,7 +27,7 @@
             android:id="@+id/zoo_animal_facts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="fooooosdasdafsdgsdfsdfsdo!" />
+            android:text="" />
     </LinearLayout>
 
     <RelativeLayout
@@ -40,13 +40,14 @@
         android:padding="20dp" >
 
         <ImageView
+            android:id="@+id/zoo_animal_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/nav_section"
             android:layout_marginBottom="10dp"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:src="@drawable/animal_black" android:id="@+id/zoo_animal_image"/>
+            android:src="@drawable/animal_black" />
 
         <LinearLayout
             android:id="@id/nav_section"
