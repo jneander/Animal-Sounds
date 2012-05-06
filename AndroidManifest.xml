@@ -24,6 +24,10 @@
             android:name=".main.ZooActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name=".main.QuizActivity"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>
