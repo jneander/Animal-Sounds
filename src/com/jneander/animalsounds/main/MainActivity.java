@@ -1,14 +1,11 @@
 package com.jneander.animalsounds.main;
 
-import com.jneander.animalsounds.R;
-import com.jneander.animalsounds.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import com.jneander.animalsounds.R;
 
 public class MainActivity extends Activity {
   @Override
@@ -20,5 +17,10 @@ public class MainActivity extends Activity {
   public void goToZoo( View v ) {
     Intent zooIntent = new Intent( this, ZooActivity.class );
     this.startActivity( zooIntent );
+  }
+  
+  public void goToQuiz( View v ) {
+    Intent quizIntent = new Intent( this, QuizActivity.class );
+    this.startActivity( quizIntent );
   }
 }
