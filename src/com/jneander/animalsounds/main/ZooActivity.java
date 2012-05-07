@@ -42,7 +42,7 @@ public class ZooActivity extends Activity implements OnClickListener {
 
     animalName = (TextView) this.findViewById( R.id.zoo_animal_name );
     animalFacts = (TextView) this.findViewById( R.id.zoo_animal_facts );
-    animalView = (ImageView) findViewById( R.id.zoo_animal_image );
+    animalView = (ImageView) this.findViewById( R.id.zoo_animal_image );
     animalView.setOnClickListener( this );
 
     lastButton = (Button) this.findViewById( R.id.zoo_last_button );
