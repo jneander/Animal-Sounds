@@ -5,6 +5,9 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +37,7 @@ public class QuizActivity extends Activity implements OnClickListener {
   private Button choice_4;
 
   private Button nextButton;
+  private Drawable buttonBg;
 
   @Override
   public void onCreate( Bundle savedInstanceState ) {
@@ -59,6 +63,8 @@ public class QuizActivity extends Activity implements OnClickListener {
     nextButton = (Button) this.findViewById( R.id.quiz_next_button );
     nextButton.setOnClickListener( this );
 
+    buttonBg = choice_1.getBackground();
+
     updateAnimalFacts();
     updateAnimalImage();
     updateAnimalSound();
@@ -69,18 +75,19 @@ public class QuizActivity extends Activity implements OnClickListener {
   public void onClick( View view ) {
     if ( view == animalView ) {
       player.start();
-    } else if ( view == choice_1 ) {
-
-    } else if ( view == choice_2 ) {
-
-    } else if ( view == choice_3 ) {
-
-    } else if ( view == choice_4 ) {
-
+    } else if ( view == choice_1 || view == choice_2 || view == choice_3 || view == choice_4 ) {
+      Button button = (Button) view;
+      if ( button.getText() != animalAnswer.getName() )
+        button.getBackground().setColorFilter( Color.RED, PorterDuff.Mode.MULTIPLY );
+      else
+        button.getBackground().setColorFilter( Color.GREEN, PorterDuff.Mode.MULTIPLY );
     } else if ( view == nextButton ) {
+      for ( Button button : new Button[] { choice_1, choice_2, choice_3, choice_4 } )
+        button.getBackground().setColorFilter( null );
+
       quiz.selectNextAnimal();
       loadQuizData();
-      
+
       updateAnimalFacts();
       updateAnimalImage();
       updateAnimalSound();
