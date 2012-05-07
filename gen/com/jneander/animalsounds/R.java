@@ -34,7 +34,7 @@ public final class R {
         public static final int image_button_to_quiz=0x7f080003;
         public static final int image_button_to_zoo=0x7f080002;
         public static final int image_title=0x7f080001;
-        public static final int nav_section=0x7f08000d;
+        public static final int nav_section=0x7f08000e;
         public static final int quiz_animal_facts=0x7f080004;
         public static final int quiz_animal_image=0x7f080009;
         public static final int quiz_choice_1=0x7f080005;
@@ -44,7 +44,7 @@ public final class R {
         public static final int quiz_next_button=0x7f08000a;
         public static final int rl1=0x7f080000;
         public static final int zoo_animal_facts=0x7f08000c;
-        public static final int zoo_animal_image=0x7f08000e;
+        public static final int zoo_animal_image=0x7f08000d;
         public static final int zoo_animal_name=0x7f08000b;
         public static final int zoo_last_button=0x7f08000f;
         public static final int zoo_next_button=0x7f080010;
