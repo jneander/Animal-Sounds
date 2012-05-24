@@ -9,8 +9,9 @@ package com.jneander.animalsounds;
 
 public final class R {
     public static final class array {
-        public static final int animalFacts=0x7f040001;
-        public static final int animals=0x7f040000;
+        public static final int animalFacts=0x7f040002;
+        public static final int animal_facts=0x7f040001;
+        public static final int animal_names=0x7f040000;
     }
     public static final class attr {
     }
