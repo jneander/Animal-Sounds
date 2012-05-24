@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.jneander.animalsounds.R;
 import com.jneander.animalsounds.obj.Animal;
-import com.jneander.animalsounds.util.DatabaseAccessor;
+import com.jneander.animalsounds.util.AnimalLoader;
 
 public class ZooActivity extends Activity implements OnClickListener {
   private Animal[] animals;
@@ -31,14 +31,14 @@ public class ZooActivity extends Activity implements OnClickListener {
   private Button lastButton;
   private Button nextButton;
 
-  private DatabaseAccessor dbAccessor;
+  private AnimalLoader animalLoader;
 
   @Override
   public void onCreate( Bundle savedInstanceState ) {
     super.onCreate( savedInstanceState );
     setContentView( R.layout.zoo );
 
-    dbAccessor = new DatabaseAccessor( this );
+    animalLoader = new AnimalLoader( this );
 
     animalName = (TextView) this.findViewById( R.id.zoo_animal_name );
     animalFacts = (TextView) this.findViewById( R.id.zoo_animal_facts );
@@ -109,6 +109,6 @@ public class ZooActivity extends Activity implements OnClickListener {
   }
 
   public void loadDatabaseIntoArray() {
-    animals = dbAccessor.getAnimalsArray();
+    animals = animalLoader.getAnimalArray();
   }
 }
