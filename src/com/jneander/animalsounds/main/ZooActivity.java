@@ -50,7 +50,7 @@ public class ZooActivity extends Activity implements OnClickListener {
     lastButton.setOnClickListener( this );
     nextButton.setOnClickListener( this );
 
-    loadDatabaseIntoArray();
+    loadAnimalsIntoArray();
 
     updateAnimalFacts();
     updateAnimalImage();
@@ -108,7 +108,7 @@ public class ZooActivity extends Activity implements OnClickListener {
     updateAnimalSound();
   }
 
-  public void loadDatabaseIntoArray() {
+  public void loadAnimalsIntoArray() {
     animals = animalLoader.getAnimalArray();
   }
 }
