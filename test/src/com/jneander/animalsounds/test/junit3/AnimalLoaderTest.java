@@ -46,6 +46,13 @@ public class AnimalLoaderTest extends ActivityInstrumentationTestCase2< MainActi
 
     checkListedAssetsExist( animalImages, imageAssets );
   }
+  
+  public void testSoundsArrayHasValidAssetNames() throws IOException {
+    String[] animalSounds = activity.getResources().getStringArray( R.array.animal_sounds );
+    String[] soundAssets = activity.getAssets().list( "sounds" );
+    
+    checkListedAssetsExist( animalSounds, soundAssets );
+  }
 
   private void checkListedAssetsExist( String[] requiredArray, String[] assetArray ) {
     for ( int reqIndex = 0; reqIndex < requiredArray.length; reqIndex++ ) {
