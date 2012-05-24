@@ -2,7 +2,7 @@ package com.jneander.animalsounds.obj;
 
 import android.content.Context;
 
-import com.jneander.animalsounds.util.DatabaseAccessor;
+import com.jneander.animalsounds.util.AnimalLoader;
 import com.jneander.animalsounds.util.Shuffle;
 
 public class Quiz {
@@ -13,11 +13,12 @@ public class Quiz {
   private final int MAX_CHOICES = 4;
 
   private Animal[] choices = new Animal[MAX_CHOICES];
+  private AnimalLoader animalLoader;
 
   public Quiz( Context context ) {
-    DatabaseAccessor dbAccessor = new DatabaseAccessor( context );
+    animalLoader = new AnimalLoader(context);
 
-    animals = dbAccessor.getAnimalsArray();
+    animals = animalLoader.getAnimalArray();
     Shuffle.shuffle( animals );
 
     randomIndices = new Integer[animals.length];
