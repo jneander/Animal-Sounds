@@ -6,6 +6,8 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.jneander.animalsounds.R;
 import com.jneander.animalsounds.main.MainActivity;
+import com.jneander.animalsounds.obj.Animal;
+import com.jneander.animalsounds.util.AnimalLoader;
 
 public class AnimalLoaderTest extends ActivityInstrumentationTestCase2< MainActivity > {
   private final String TAG = "AnimalLoaderTest";
@@ -46,12 +48,27 @@ public class AnimalLoaderTest extends ActivityInstrumentationTestCase2< MainActi
 
     checkListedAssetsExist( animalImages, imageAssets );
   }
-  
+
   public void testSoundsArrayHasValidAssetNames() throws IOException {
     String[] animalSounds = activity.getResources().getStringArray( R.array.animal_sounds );
     String[] soundAssets = activity.getAssets().list( "sounds" );
-    
+
     checkListedAssetsExist( animalSounds, soundAssets );
+  }
+
+  public void testAnimalArrayHasValidData() {
+    AnimalLoader animalLoader = new AnimalLoader( activity );
+    Animal[] animals = animalLoader.getAnimalArray();
+
+    assertTrue( animals.length > 0 );
+
+    for ( Animal animal : animals ) {
+      assertNotNull( animal );
+      assertNotNull( animal.getName() );
+      assertNotNull( animal.getFacts() );
+      assertNotNull( animal.getImagefile() );
+      assertNotNull( animal.getSoundfile() );
+    }
   }
 
   private void checkListedAssetsExist( String[] requiredArray, String[] assetArray ) {
