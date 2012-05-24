@@ -27,7 +27,6 @@
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:onClick="goToZoo"
         android:src="@drawable/button_to_zoo" />
 
     <ImageView
@@ -39,7 +38,6 @@
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:onClick="goToQuiz"
         android:src="@drawable/button_to_quiz" />
 
 </LinearLayout>
