@@ -12,6 +12,10 @@ public class AnimalLoader {
     loadAnimalsFromResources( activity );
   }
 
+  public Animal[] getAnimalArray() {
+    return this.animals;
+  }
+  
   private void loadAnimalsFromResources( Activity activity ) {
     String[] animalNames = activity.getResources().getStringArray( R.array.animal_names );
     String[] animalFacts = activity.getResources().getStringArray( R.array.animal_facts );
