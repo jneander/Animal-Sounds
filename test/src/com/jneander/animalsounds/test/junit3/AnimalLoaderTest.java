@@ -32,4 +32,9 @@ public class AnimalLoaderTest extends ActivityInstrumentationTestCase2< MainActi
     String[] animal_images = activity.getResources().getStringArray( R.array.animal_images );
     assertTrue( animal_images.length > 0 );
   }
+
+  public void testCanAccessArrayOfAnimalSounds() {
+    String[] animal_sounds = activity.getResources().getStringArray( R.array.animal_sounds );
+    assertTrue( animal_sounds.length > 0 );
+  }
 }
