@@ -13,5 +13,17 @@
         <item>Information about the cow</item>
         <item>Information about the horse</item>
     </string-array>
+    <string-array name="animal_images">
+        <item>dog.png</item>
+        <item>cat.png</item>
+        <item>cow.png</item>
+        <item>horse.png</item>
+    </string-array>
+    <string-array name="animal_sounds">
+        <item>dog.mp3</item>
+        <item>cat.mp3</item>
+        <item>cow.mp3</item>
+        <item>horse.mp3</item>
+    </string-array>
 
 </resources>
